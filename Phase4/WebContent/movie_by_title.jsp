@@ -64,7 +64,7 @@ p{
 </head>
 <body>
 	<h1>제목으로 검색</h1>
-	<form action="" method="POST">
+	<form action="title_result.jsp" method="POST">
 	<p>제목 입력: </p><input type="text" placeholder="제목 입력"  class="text_title" name="title"><input type="submit" class="search_btn" value="검색" >
 	</form>
 	<hr>

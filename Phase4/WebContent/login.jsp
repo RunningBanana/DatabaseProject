@@ -36,7 +36,9 @@
 		ps.setString(2, Password);
 		rs = ps.executeQuery();
 		if (rs.next()) {
+			String AccountID = Integer.toString(rs.getInt(1));
 			session.setAttribute("ID", ID);
+			session.setAttribute("AccountID", AccountID);
 			out.println("로그인하였습니다.");
 		} else {
 			out.println("존재하지 않는 ID거나 비밀번호가 일치하지 않습니다.");

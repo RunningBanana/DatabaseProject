@@ -10,7 +10,7 @@
 
  .movie_all{
 	width: 1200px;
-	height: 1200px;
+	height: 900px;
 	overflow: scroll;
 }
 table.movie_table {
@@ -88,7 +88,7 @@ p{
 </head>
 <body>
 	<h1>조건으로 영상물 검색</h1>
-	<form action="" method="POST" onSubmit="return check(this)">
+	<form action="condition_result.jsp" method="POST" onSubmit="return check(this)">
 	<table class="t1">
 			<tr height="2" bgcolor="#FFC8C3">
 				<td colspan="2"></td>
@@ -114,7 +114,7 @@ p{
 				<th>최소영상 길이: </th>
 				<td>
 					<input type="radio" name="length" value="Yes">사용
-					<input type="text" name="length" placeholder="숫자 입력(영상길이)">
+					<input type="text" name="length1" placeholder="숫자 입력(영상길이)">
 					<input type="radio" name="length" value="None" checked="checked">미사용
 				</td>
 			</tr>
@@ -133,8 +133,17 @@ p{
 				<th>최소 평점: </th>
 				<td>
 					<input type="radio" name="score" value="Yes">사용
-					<input type="text" name="score" placeholder="평점 입력(숫자)">
+					<input type="text" name="score1" placeholder="평점 입력(숫자)">
 					<input type="radio" name="score" value="None" checked="checked">미사용
+				</td>
+			</tr>
+			<tr>
+				<th>버전: </th>
+				<td>
+					<input type="radio" name="version" value="GB">GB
+					<input type="radio" name="version" value="US">US
+					<input type="radio" name="version" value="KR">KR
+					<input type="radio" name="version" value="None" checked="checked">미사용
 				</td>
 			</tr>
 			<tr height="2" bgcolor="#FFC8C3">
