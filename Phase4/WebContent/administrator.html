@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Administrator page</title>
+<style>
+		.subm{  /* 버튼 스타일 */
+			display:block;  /* 블록 레벨 요소 */
+			background-color:#fff;  /* 배경색 */
+			border:1px solid #dedede;  /* 테두리 */
+			cursor:pointer;  /* 마우스 포인터 */
+			padding:5px 10px 6px 7px;	/* 패딩 */
+		}
+		.subm:hover{  /* 버튼 위로 마우스 포인터 올렸을 때 스타일 */
+			background-color:#AAAAAA;  /* 배경색 */
+			border:1px solid #000000;  /* 테두리 */
+			color:#000000; /* 글자색 */
+		}
+		.t1{
+			width: 940px;
+			padding: 5px 0px 5px 0px
+		}
+</style>
+</head>
+<body>
+	<h1>Welcome to KnuMovie Administrator Page</h1>
+	<table class="t1">
+			<tr height="2" bgcolor="#FFC8C3">
+				<td colspan="2"></td>
+			</tr>
+			<tr>
+				<th>영상물 등록: </th>
+				<td><input type="button" class="subm" value="영상물 등록" onclick="location.href='movie_add.jsp'"></td>
+			</tr>
+			<tr>
+				<th>영상물 정보 수정: </th>
+				<td><input type="button" class="subm" value="영상물 수정" onclick="location.href='movie_all_admin.jsp'"></td>
+			</tr>
+			<tr height="2" bgcolor="#FFC8C3">
+				<td colspan="2"></td>
+			</tr>
+			<tr>
+				<td colspan="2" align="center">
+				<input type="button" value="이전으로" onclick="location.href='register.jsp'">
+				</td>
+			</tr>
+		</table>
+</body>
+</html>
