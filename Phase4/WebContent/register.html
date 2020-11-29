@@ -21,6 +21,7 @@
 			padding: 5px 0px 5px 0px
 		}
 </style>
+
 </head>
 <body>
 	<form name="write_form_member" method="post" action="">
@@ -30,24 +31,19 @@
 			</tr>
 			<tr>
 				<th>아이디</th>
-				<td><input type="text" name="cursor:pointer"> <a
-					href='#' style='cursor: help'> English</a></td>
+				<td><input type="text" name="id" id="id">English<input type="button" value="ID 중복체크" onclick="idcheck()"></td>
 			</tr>
 			<tr>
 				<th>비밀번호</th>
-				<td><input type="password" name="pw"> 영문/숫자포함 6자 이상</td>
-			</tr>
-			<tr>
-				<th>비밀번호 확인</th>
-				<td><input type="password" name="pw_re"></td>
+				<td><input type="password" name="pw" id="pw"> 영문/숫자포함 6자 이상</td>
 			</tr>
 			<tr>
 				<th>이름</th>
-				<td><input type="text" name="name"></td>
+				<td><input type="text" name="name" id="name"></td>
 			</tr>
 			<tr>
 				<th>생일(YYYY-MM-DD)</th>
-				<td><input type="date" name="birth"></td>
+				<td><input type="date" name="birth" id="birth"></td>
 			</tr>
 		
 			<tr height="2" bgcolor="#FFC8C3">
@@ -55,10 +51,60 @@
 			</tr>
 			<tr>
 				<td colspan="2" align="center">
-				<input type="submit" value="회원가입"> <input type="reset" value="다시 입력">
+				<input type="button" value="회원가입" onclick="regist()"> <input type="reset" value="다시 입력">
 					<input type="button" value="이전으로" onclick="location.href='Introduction.jsp'"></td>
 			</tr>
 		</table>
+		<script>
+			var check = -1;
+			function idcheck(){
+		 		var id = document.getElementById("id").value;
+		 		var xhr = new XMLHttpRequest();
+		 	    xhr.open('POST', 'duplicate_check.jsp', true);
+		 	    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+		 	    xhr.onreadystatechange = function(){
+		 	        if(xhr.readyState == 4){
+		 	        	if(xhr.status == 200){
+		 	            	result = xhr.responseText;
+		 	            	if(result.includes("yes")){
+		 	            		check = 1;
+		 	            		alert("사용할 수 있는 ID입니다.");
+		 	            	}
+		 	            	else{
+		 	            		check = 0;
+		 	            		alert("사용할 수 없는 ID입니다.");
+		 	        		}
+		 				}
+		 	        }
+		 	    }
+		 	    xhr.send('id=' + encodeURIComponent(id));
+			}
+			
+			function regist(){
+		 		var id = document.getElementById("id").value;
+		 		var password = document.getElementById("pw").value;
+		 		var name = document.getElementById("name").value;
+		 		var birth = document.getElementById("birth").value;
+		 		var xhr = new XMLHttpRequest();
+		 	    xhr.open('POST', 'regist_to_db.jsp', true);
+		 	    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+		 	    xhr.onreadystatechange = function(){
+		 	        if(xhr.readyState == 4){
+		 	        	if(xhr.status == 200){
+		 	        		result = xhr.responseText;
+		 	        		if(result.includes("회원가입이")){
+		 	            		alert(result);
+		 	            		document.location.href="Introduction.jsp";
+		 	        		}
+		 	        		else{
+		 	        			alert(result);
+		 	        		}
+		 				}
+		 	        }
+		 	    }
+		 	    xhr.send('id=' + encodeURIComponent(id) + '&password=' + encodeURIComponent(password) + '&name=' + encodeURIComponent(name) + '&birth=' + encodeURIComponent(birth) + '&check=' + encodeURIComponent(check));
+			}
+		</script>
 	</form>
 </body>
 </html>

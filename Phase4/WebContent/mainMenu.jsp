@@ -28,7 +28,8 @@
 <body>
 <h1>Welcome to KnuMovie Main Menu Page</h1>
 <%
-	out.println("<h3>"+ request.getParameter("ID")+" 회원님 반갑습니다." +"</h3>");
+	String ID = (String)session.getAttribute("ID");
+	out.println("<h3>"+ ID +" 회원님 반갑습니다." +"</h3>");
 %>
 	<table class="t1">
 			<tr height="2" bgcolor="#FFC8C3">

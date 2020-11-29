@@ -28,23 +28,47 @@
 <body>
 <h1>Welcome to KnuMovie Site</h1>
 	<hr>
-	<form action="register.jsp" method="POST">
+	<form action="mainMenu.jsp" method="POST">
 		<table class="t1">
 			<tr>
 				<th>ID</th>
-				<td><input type="text" name="ID"> <input type="button" value="ID 중복체크"></td>
+				<td><input type="text" name="ID" id="ID"></td>
 			</tr>
 			<tr>
 				<th>비밀번호</th>
-				<td><input type="text" name="Password"></td>
+				<td><input type="text" name="Password" id="Password"></td>
 			</tr>
 			<tr>
              <td colspan="2">
             	 <input type="button" value="회원가입" onclick="location.href='register.html'">
-               <input type="submit" value="로그인">
+               <input type="button" value="로그인" onclick="login()">
             </td>
            </tr>
 		</table>
 	</form>
+	<script>
+	function login(){
+ 		var id = document.getElementById("ID").value;
+ 		var password = document.getElementById("Password").value;
+ 		var xhr = new XMLHttpRequest();
+ 	    xhr.open('POST', 'login.jsp', true);
+ 	    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+ 	    xhr.onreadystatechange = function(){
+ 	        if(xhr.readyState == 4){
+ 	        	if(xhr.status == 200){
+ 	            	result = xhr.responseText;
+ 	            	if(result.includes("로그인")){
+ 	            		alert(result);
+ 	            		document.location.href="mainMenu.jsp";
+ 	            	}
+ 	            	else{
+ 	            		alert(result);
+ 	        		}
+ 				}
+ 	        }
+ 	    }
+ 	    xhr.send('id=' + encodeURIComponent(id) + '&password=' + encodeURIComponent(password));
+	}
+	</script>
 </body>
 </html>
