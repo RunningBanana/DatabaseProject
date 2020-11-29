@@ -1,8 +1,8 @@
-<!doctype html>
-<html lang="en">
+<!DOCTYPE html>
+<html>
 <head>
 <meta charset="UTF-8">
-<title>회원 가입</title>
+<title>Movie Page</title>
 <style>
 		.subm{  /* 버튼 스타일 */
 			display:block;  /* 블록 레벨 요소 */
@@ -23,42 +23,31 @@
 </style>
 </head>
 <body>
-	<form name="write_form_member" method="post" action="">
-		<table class="t1">
+	<h1>Welcome to KnuMovie Movie Page</h1>
+	<table class="t1">
 			<tr height="2" bgcolor="#FFC8C3">
 				<td colspan="2"></td>
 			</tr>
 			<tr>
-				<th>아이디</th>
-				<td><input type="text" name="cursor:pointer"> <a
-					href='#' style='cursor: help'> English</a></td>
+				<th>전체영상물 보기: </th>
+				<td><input type="button" class="subm" value="영상물 목록" onclick="location.href='movie_all.jsp'"></td>
 			</tr>
 			<tr>
-				<th>비밀번호</th>
-				<td><input type="password" name="pw"> 영문/숫자포함 6자 이상</td>
+				<th>제목으로 영상물 검색: </th>
+				<td><input type="button" class="subm" value="제목 검색" onclick="location.href='movie_by_title.jsp'"></td>
 			</tr>
 			<tr>
-				<th>비밀번호 확인</th>
-				<td><input type="password" name="pw_re"></td>
+				<th>조건으로 영상물 검색: </th>
+				<td><input type="button" class="subm" value="조건 검색" onclick="location.href='movie_by_condition.jsp'"></td>
 			</tr>
-			<tr>
-				<th>이름</th>
-				<td><input type="text" name="name"></td>
-			</tr>
-			<tr>
-				<th>생일(YYYY-MM-DD)</th>
-				<td><input type="date" name="birth"></td>
-			</tr>
-		
 			<tr height="2" bgcolor="#FFC8C3">
 				<td colspan="2"></td>
 			</tr>
 			<tr>
 				<td colspan="2" align="center">
-				<input type="submit" value="회원가입"> <input type="reset" value="다시 입력">
-					<input type="button" value="이전으로" onclick="location.href='Introduction.jsp'"></td>
+				<input type="button" value="이전으로" onclick="location.href='register.jsp'">
+				</td>
 			</tr>
 		</table>
-	</form>
 </body>
 </html>
