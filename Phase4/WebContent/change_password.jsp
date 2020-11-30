@@ -33,16 +33,16 @@
 			</tr>
 			<tr>
 				<th>현재 비밀번호: </th>
-				<td><input type="text" name="now_password"></td>
+				<td><input type="text" name="now_password" id="now_password"></td>
 			</tr>
 			<tr><td><br></td></tr>
 			<tr>
 				<th>변경 할 비밀번호: </th>
-				<td><input type="text" name="password1"></td>
+				<td><input type="text" name="password1" id="password1"></td>
 			</tr>
 			<tr>
 				<th>비밀번호 확인: </th>
-				<td><input type="text" name="password2"></td>
+				<td><input type="text" name="password2" id="password2"></td>
 			</tr>
 			<tr height="2" bgcolor="#FFC8C3">
 				<td colspan="2"></td>
@@ -50,9 +50,35 @@
 			<tr>
 				<td colspan="2" align="center">
 				<input type="button" value="이전으로" onclick="location.href='customer.html'">
-				<input type="button" value="변경하기" onclick="location.href=''">
+				<input type="button" value="변경하기" onclick="change_password()">
 				</td>
 			</tr>
-		</table>
+	</table>
+	<script>
+   	 	function change_password() {
+   	 		var now_password = document.getElementById("now_password").value;
+   	 		var password1 = document.getElementById("password1").value;
+   	 		var password2 = document.getElementById("password2").value;
+   	 		if(password1 != password2)
+   	 			alert("변경할 비밀번호와 비밀번호 확인이 일치하지 않습니다.");
+   	 		else{
+   	 			var xhr = new XMLHttpRequest();
+	  	 	    xhr.open('POST', 'change_pw_db.jsp', true);
+  	 	    	xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+  	 	    	xhr.onreadystatechange = function(){
+  	 	        	if(xhr.readyState == 4){
+	  	 	        	if(xhr.status == 200){
+  	 	            		result = xhr.responseText;
+  	 	            		alert(result);
+  	 	            		if(result.includes("성공"))
+  	 	            			document.location.href="customer.html";
+  	 					}
+  	 	        	}
+  	 	    	}
+  	 	    	xhr.send('now_password=' + encodeURIComponent(now_password) + '&change_password=' + encodeURIComponent(password1)); 			
+   	 		}
+  			
+    	}
+	</script>
 </body>
 </html>

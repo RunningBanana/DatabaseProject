@@ -38,7 +38,7 @@
 			</tr>
 			<tr>
 				<th>회원 탈퇴: </th>
-				<td><input type="button" class="subm" value="회원 탈퇴" onclick="location.href='exit.jsp'"></td>
+				<td><input type="button" class="subm" value="회원 탈퇴" onclick="withdrawal()"></td>
 			</tr>
 			<tr height="2" bgcolor="#FFC8C3">
 				<td colspan="2"></td>
@@ -49,5 +49,23 @@
 				</td>
 			</tr>
 		</table>
+	<script>
+   	 	function withdrawal() {
+   	 		var xhr = new XMLHttpRequest();
+	  	 	xhr.open('POST', 'withdrawal.jsp', true);
+  	 	    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+  	 	    xhr.onreadystatechange = function(){
+  	 	      	if(xhr.readyState == 4){
+	  	 	      	if(xhr.status == 200){
+  	 	          		result = xhr.responseText;
+  	 	          		alert(result);
+  	 	          		if(result.includes("완료"))
+  	 	          			document.location.href="Introduction.jsp";
+  	 				}
+  	 	       	}
+  	 	    }
+  	 	    xhr.send(); 			
+   	 	}
+	</script>
 </body>
 </html>
