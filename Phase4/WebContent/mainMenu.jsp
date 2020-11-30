@@ -45,7 +45,7 @@
 			</tr>
 			<tr>
 				<th>평가관련 기능: </th>
-				<td><input type="button" class="subm" value="평가관련 기능" onclick="location.href='rating.html'"></td>
+				<td><input type="button" class="subm" value="평가관련 기능" onclick="location.href='rating.jsp'"></td>
 			</tr>
 			<tr>
 				<th>관리자 기능: </th>

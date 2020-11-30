@@ -97,8 +97,8 @@ p{
 				<th>종류: </th>
 				<td>
 					<input type="radio" name="type" value="Movie">Movie
-					<input type="radio" name="type" value="KnuMovieDB">KnuMovieDB
-					<input type="radio" name="type" value="TV series">TV series
+					<input type="radio" name="type" value="KnuMovieDB">KnuMovieDB Original
+					<input type="radio" name="type" value="TV series">TV Series
 					<input type="radio" name="type" value="None" checked="checked">미사용
 				</td>
 			</tr>

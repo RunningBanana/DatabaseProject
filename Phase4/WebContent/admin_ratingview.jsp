@@ -1,18 +1,20 @@
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
 	pageEncoding="EUC-KR"%>
-<%@ page language="java" import="java.text.*, java.sql.*, java.util.*"%>
+<%@ page language="java"
+	import="java.text.*, java.sql.*, java.util.*, java.util.Date"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>영상물 검색 결과</title>
+<title>관리자 전용 평가내역 확인</title>
 <style type="text/css">
- .movie_all{
-	width: 100%;
-	height: 80%;
+.movie_all{
+	margin: auto;
+	width: 900px;
+	height: 300px;
 	overflow: scroll;
 }
-table.movie_table {
+table.rating_table {
 	border-collapse: separate;
 	border-spacing: 1px;
 	text-align: left;
@@ -21,8 +23,8 @@ table.movie_table {
 	margin: auto;
 }
 
-th.movie_th {
-	width: 150px;
+th.rating_th {
+	width: 200px;
 	padding: 10px;
 	font-weight: bold;
 	vertical-align: top;
@@ -30,7 +32,7 @@ th.movie_th {
 	background: #efefef;
 }
 
-td.movie_td {
+td.rating_td {
 	width: 350px;
 	padding: 10px;
 	vertical-align: top;
@@ -44,7 +46,7 @@ td.movie_td {
 .btn{
 	margin: 5px;
 	border-radius: 4/4px;
-	width: 70px;
+	width: 110px;
 	height: 40px;
 }
 .text{
@@ -58,8 +60,7 @@ p{
 </style>
 </head>
 <body>
-	<h1>영상물 검색 결과</h1>
-	<hr>
+<h1>모든 사용자 평가내역</h1>
 	<%
 	Connection conn = null;
 	String url = "jdbc:postgresql://localhost/university";
@@ -67,14 +68,9 @@ p{
 	String password = "comp322";
 	ResultSet rs = null;
 	Statement stmt = null;
-	String AccountID = (String)session.getAttribute("AccountID");
-	String search_title = request.getParameter("title");
-	String sql = "SELECT M.MovieID, M.Title FROM MOVIE M WHERE M.Title='" + search_title + "' "
-			+ "AND M.MovieID Not in (SELECT R.MovieID FROM RATING R WHERE R.AccountID = " + AccountID + ")";
-	int res = 0;
-	int count = 0;
-	int[] Movie = new int[500];
-
+	PreparedStatement ps = null;
+	int count = 1;
+	
 	try {
 		Class.forName("org.postgresql.Driver");
 		System.out.println("Success!");
@@ -89,20 +85,25 @@ p{
 		System.err.println("Cannot get a connection : " + ex.getMessage());
 		System.exit(1);
 	}
-
+	String sql = "";
+	
 	out.println("<div class='movie_all'>");
-	out.println("<table class ='movie_table' border=\"1\">");
+	out.println("<table class ='rating_table' border=\"1\">");
 	try {
 		stmt = conn.createStatement();
+		sql = "SELECT M.Title, A.Name, R.Score FROM Movie M, Account A, Rating R WHERE R.AccountID = A.AccountID AND R.MovieID = M.MovieID";
 		rs = stmt.executeQuery(sql);
 
+		out.println("<tr class='rating_tr'><th class='rating_tr'>항목 이름</th><th class='rating_tr'>영상물 제목</th><th class='rating_tr'>이름</th><th class='rating_tr'>평점</th></tr>");
 		while (rs.next()) {
-			int MovieID = rs.getInt(1);
-			String Title = rs.getString(2);
-			Movie[++count] = MovieID;
-			out.println("<tr class='movie_tr'>");
-			out.println("<th class='movie_th'>[" + count + "]" + "영상 제목: "+"</th>"+"<td class='movie_td'>"+ Title + "</td>");
+			String title = rs.getString(1);
+			String Name = rs.getString(2);
+			Double score = rs.getDouble(3);
+			
+			out.println("<tr class='rating_tr'>");
+			out.println("<th class='rating_th'>[" + count + "]" + "영상 제목: "+"</th>"+"<td class='rating_td'>"+ title + "</td>" +"<td class='rating_td'>"+ Name + "</td>"+ "<td class='rating_td'>"+ score + "</td>");
 			out.println("</tr>");
+			count++;
 		}
 		stmt.close();
 	} catch (SQLException ex) {
@@ -110,28 +111,8 @@ p{
 		System.exit(1);
 	}
 	out.println("</table> </div>");
-	ArrayList<String> mm = new ArrayList<String>(500);
-	for(int i=0; i<=count; i++){
-		mm.add(Integer.toString(Movie[i]));
-	}
-	session.setAttribute("MovieID", mm);
 	%>
 	<hr>
-	<form action="detail_movie.jsp" method="POST" onSubmit="return check(this)">
-	<p>자세한 정보보기:</p> <input type="text" name="num" placeholder="영상번호 입력"  class="text" id="num" ><input type="submit" class="btn" value="선택">
-	<input type="button" class="btn" value="이전으로" onclick="location.href='movie.html'">
-	</form>
-	<script type="text/javascript">
-	function check(Join){
-		var num = parseInt(document.getElementById("num").value);
-		var count = <%=count%>;
-		
-		if(num > count){
-			alert("숫자를 다시 입력해주세요.");
-			return false;
-		}
-		else return true;
-	}
-	</script>
+	<input type="button" value="이전으로" class="btn" onclick="location.href='rating.jsp'">
 </body>
 </html>

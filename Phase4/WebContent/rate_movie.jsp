@@ -1,15 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
 	pageEncoding="EUC-KR"%>
-<%@ page language="java" import="java.text.*, java.sql.*, java.util.*"%>
+<%@ page language="java" import="java.text.*, java.sql.*, java.util.*, java.util.Date"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>영상물 검색 결과</title>
+<title>영상물 평가하기</title>
 <style type="text/css">
+
  .movie_all{
-	width: 100%;
-	height: 80%;
+	width: 900px;
+	height: 300px;
 	overflow: scroll;
 }
 table.movie_table {
@@ -44,7 +45,7 @@ td.movie_td {
 .btn{
 	margin: 5px;
 	border-radius: 4/4px;
-	width: 70px;
+	width: 120px;
 	height: 40px;
 }
 .text{
@@ -58,7 +59,7 @@ p{
 </style>
 </head>
 <body>
-	<h1>영상물 검색 결과</h1>
+	<h1>영상물 평가</h1>
 	<hr>
 	<%
 	Connection conn = null;
@@ -67,13 +68,6 @@ p{
 	String password = "comp322";
 	ResultSet rs = null;
 	Statement stmt = null;
-	String AccountID = (String)session.getAttribute("AccountID");
-	String search_title = request.getParameter("title");
-	String sql = "SELECT M.MovieID, M.Title FROM MOVIE M WHERE M.Title='" + search_title + "' "
-			+ "AND M.MovieID Not in (SELECT R.MovieID FROM RATING R WHERE R.AccountID = " + AccountID + ")";
-	int res = 0;
-	int count = 0;
-	int[] Movie = new int[500];
 
 	try {
 		Class.forName("org.postgresql.Driver");
@@ -89,7 +83,11 @@ p{
 		System.err.println("Cannot get a connection : " + ex.getMessage());
 		System.exit(1);
 	}
-
+	int rate_movieID= (Integer)session.getAttribute("MovieID");
+	
+	String sql = "SELECT M.Title, M.Type, M.IsAdult, M.StartDate, M.AverageScore, M.runTimes, G.Genre FROM MOVIE M, GENRE G, BELONG B WHERE M.MovieID ="
+			+ rate_movieID + " AND M.MovieID = B.MovieID AND B.GenreID = G.GenreID";
+	
 	out.println("<div class='movie_all'>");
 	out.println("<table class ='movie_table' border=\"1\">");
 	try {
@@ -97,11 +95,20 @@ p{
 		rs = stmt.executeQuery(sql);
 
 		while (rs.next()) {
-			int MovieID = rs.getInt(1);
-			String Title = rs.getString(2);
-			Movie[++count] = MovieID;
+			String Title = rs.getString(1);
+			String Type = rs.getString(2);
+			boolean IsAdult = rs.getBoolean(3);
+			Date StartDate = rs.getDate(4);
+			Double AverageScore = rs.getDouble(5);
+			int runTimes = rs.getInt(6);
+			String Genre = rs.getString(7);
+
+			
 			out.println("<tr class='movie_tr'>");
-			out.println("<th class='movie_th'>[" + count + "]" + "영상 제목: "+"</th>"+"<td class='movie_td'>"+ Title + "</td>");
+			out.println("<tr class='movie_tr'><th class='movie_th'>항목 이름</th><th class='movie_th'>영상 제목</th><th class='movie_th'>유형</th><th class='movie_th'>성인물 제한여부</th><th class='movie_th'>상영년도</th><th class='movie_th'>평균 평점</th><th class='movie_th'>재생 시간</th><th class='movie_th'>장르</th></tr>");
+			out.println("<th class='movie_th'>영상 제목: "+"</th>"+"<td class='movie_td'>"+ Title + "</td>"+"<td class='movie_td'>"+ Type + "</td>"
+					+"<td class='movie_td'>"+ IsAdult + "</td>"+"<td class='movie_td'>"+ StartDate + "</td>"+"<td class='movie_td'>"+ AverageScore + "</td>"
+					+"<td class='movie_td'>"+ runTimes + "</td>"+"<td class='movie_td'>"+ Genre + "</td>");
 			out.println("</tr>");
 		}
 		stmt.close();
@@ -110,28 +117,10 @@ p{
 		System.exit(1);
 	}
 	out.println("</table> </div>");
-	ArrayList<String> mm = new ArrayList<String>(500);
-	for(int i=0; i<=count; i++){
-		mm.add(Integer.toString(Movie[i]));
-	}
-	session.setAttribute("MovieID", mm);
 	%>
 	<hr>
-	<form action="detail_movie.jsp" method="POST" onSubmit="return check(this)">
-	<p>자세한 정보보기:</p> <input type="text" name="num" placeholder="영상번호 입력"  class="text" id="num" ><input type="submit" class="btn" value="선택">
-	<input type="button" class="btn" value="이전으로" onclick="location.href='movie.html'">
+	<form action="rating_process.jsp" method="POST">
+	<input type="number" name="rate" id="rate" placeholder="점수입력" class="text" min="0" max="10" step="0.1"><input type="submit" class="btn" value="평가하기">
 	</form>
-	<script type="text/javascript">
-	function check(Join){
-		var num = parseInt(document.getElementById("num").value);
-		var count = <%=count%>;
-		
-		if(num > count){
-			alert("숫자를 다시 입력해주세요.");
-			return false;
-		}
-		else return true;
-	}
-	</script>
 </body>
 </html>

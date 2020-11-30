@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
 	pageEncoding="EUC-KR"%>
-<%@ page language="java" import="java.text.*, java.sql.*"%>
+<%@ page language="java" import="java.text.*, java.sql.*, java.util.*"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,7 +9,7 @@
 <style type="text/css">
  .movie_all{
 	width: 1200px;
-	height: 800px;
+	height: 700px;
 	overflow: scroll;
 }
 table.movie_table {
@@ -30,7 +30,7 @@ th.movie_th {
 	background: #efefef;
 }
 
-td.movie_th {
+td.movie_td {
 	width: 350px;
 	padding: 10px;
 	vertical-align: top;
@@ -164,11 +164,28 @@ p{
 		System.exit(1);
 	}
 	out.println("</table> </div>");
+	ArrayList<String> mm = new ArrayList<String>(500);
+	for(int i=0; i<=count; i++){
+		mm.add(Integer.toString(Movie[i]));
+	}
+	session.setAttribute("MovieID", mm);
 	%>
 	<hr>
-	<div align="left">
-	<p>자세한 정보보기:</p> <input type="text" placeholder="영상번호 입력"  class="text"><input type="button" class="btn" value="선택">
+	<form action="detail_movie.jsp" method="POST" onSubmit="return check(this)">
+	<p>자세한 정보보기:</p> <input type="text" name="num" placeholder="영상번호 입력"  class="text" id="num" ><input type="submit" class="btn" value="선택">
 	<input type="button" class="btn" value="이전으로" onclick="location.href='movie.html'">
-	</div>
+	</form>
+	<script type="text/javascript">
+	function check(Join){
+		var num = parseInt(document.getElementById("num").value);
+		var count = <%=count%>;
+		
+		if(num > count){
+			alert("숫자를 다시 입력해주세요.");
+			return false;
+		}
+		else return true;
+	}
+	</script>
 </body>
 </html>
