@@ -62,13 +62,26 @@ p{
 }
 .t1{
 	width: 1200px;
-	padding: 5px 0px 5px 0px
+	padding: 5px 0px 5px 0px;
 }
 </style>
+	<script type="text/javascript">
+	function check(Join){
+		var title = document.getElementsByName("title")[0].value;
+		var startdate = document.getElementsByName("startdate")[0].value;
+		var length = document.getElementsByName("length")[0].value;
+		
+		if(title == "" ||  startdate == "" || String(length) == ""){
+			alert("모두 입력해주세요.");
+			return false;
+		}
+		else return true;
+	}
+</script>
 </head>
 <body>
 	<h1>영상물 등록</h1>
-	<form action="" method="POST" onSubmit="return check(this)">
+	<form action="register_movie.jsp" method="POST" onSubmit="return check(this)">
 	<table class="t1">
 			<tr height="2" bgcolor="#FFC8C3">
 				<td colspan="2"></td>
@@ -82,7 +95,7 @@ p{
 			<tr>
 				<th>종류: </th>
 				<td>
-					<input type="radio" name="type" value="Movie">Movie
+					<input type="radio" name="type" value="Movie" checked="checked">Movie
 					<input type="radio" name="type" value="KnuMovieDB">KnuMovieDB
 					<input type="radio" name="type" value="TV series">TV series
 				</td>
@@ -90,7 +103,7 @@ p{
 			<tr>
 				<th>성인제한 여부: </th>
 				<td>
-					<input type="radio" name="adult" value="Yes">19세이상
+					<input type="radio" name="adult" value="Yes" checked="checked">19세이상
 					<input type="radio" name="adult" value="No">19세이하
 				</td>
 			</tr>
@@ -103,13 +116,13 @@ p{
 			<tr>
 				<th>영상 길이: </th>
 				<td>
-					<input type="text" name="length" placeholder="숫자 입력(영상길이)">
+					<input type="number" name="length" placeholder="숫자 입력(영상길이)">
 				</td>
 			</tr>
 			<tr>
 				<th>장르: </th>
 				<td>
-					<input type="radio" name="genre" value="Action">Action
+					<input type="radio" name="genre" value="Action" checked="checked">Action
 					<input type="radio" name="genre" value="Comedy">Comedy
 					<input type="radio" name="genre" value="Romance">Romance
 					<input type="radio" name="genre" value="SF">SF
@@ -122,6 +135,7 @@ p{
 			<tr>
 				<td colspan="2" align="center">
 				<input type="submit" value="등록하기">
+				<input type="button" value="이전으로" onclick="location.href='administrator.html'">
 				</td>
 			</tr>
 		</table>

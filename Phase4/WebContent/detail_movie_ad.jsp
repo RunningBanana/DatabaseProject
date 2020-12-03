@@ -69,7 +69,7 @@ p{
 	String password = "comp322";
 	ResultSet rs = null;
 	Statement stmt = null;
-	int choose_movieID, rating_num=0;
+	int choose_movieID;
 	String AccountID = (String)session.getAttribute("AccountID");
 
 	try {
@@ -117,12 +117,6 @@ p{
 					+"<td class='movie_td'>"+ runTimes + "</td>"+"<td class='movie_td'>"+ Genre + "</td>");
 			out.println("</tr>");
 		}
-		sql = "SELECT COUNT(*) FROM RATING WHERE MovieID="+choose_movieID+" AND AccountID="+AccountID;
-		rs = stmt.executeQuery(sql);
-		while(rs.next()){
-			rating_num = rs.getInt(1);
-		}
-		System.out.print(rating_num);
 		stmt.close();
 	} catch (SQLException ex) {
 		System.err.println("sql error = " + ex.getMessage());
@@ -133,18 +127,9 @@ p{
 	session.setAttribute("MovieID", rate_movie);
 	%>
 	<hr>
-	<form action="rate_movie.jsp" method="POST" onSubmit="return check(this)">
-	<input type="button" class="btn" value="영상물 메뉴로" onclick="location.href='movie.html'">
-	<input type="submit" class="btn" value="영상물 평가하기">
+	<form action="movie_correct.jsp" method="POST">
+	<input type="button" class="btn" value="관리자 메뉴로" onclick="location.href='administrator.html'">
+	<input type="submit" class="btn" value="영상물 수정하기">
 	</form>
-	<script type="text/javascript">
-		function check(Join){
-			var rating_num = <%=rating_num%>;
-			if(rating_num > 0){
-				alert("한번 평가한 영상물은 평가할 수 없습니다");
-				return false;
-			}
-		}
-	</script>
 </body>
 </html>

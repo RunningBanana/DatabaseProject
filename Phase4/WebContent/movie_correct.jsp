@@ -5,12 +5,12 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>영상물 정보 수정</title>
+<title>영상물 수정</title>
 <style type="text/css">
 
  .movie_all{
 	width: 1200px;
-	height: 1200px;
+	height: 900px;
 	overflow: scroll;
 }
 table.movie_table {
@@ -74,9 +74,9 @@ p{
 		var length = document.getElementsByName("length");
 		var genre = document.getElementsByName("genre");
 
-		if(title[title.length-1].checked == true && type[type.length-1].checked == true 
-				&& adult[adult.length-1].checked == true && startdate[startdate.length-1].checked == true && 
-				length[length.length-1].checked == true && genre[genre.length-1].checked == true){
+		if(type[type.length-1].checked == true && adult[adult.length-1].checked == true 
+				&& length[length.length-1].checked == true && genre[genre.length-1].checked == true && 
+				title[title.length-1].checked == true && startdate[startdate.length-1].checked == true){
 			alert("하나 이상 선택해주세요.");
 			return false;
 		}
@@ -87,17 +87,17 @@ p{
 </script>
 </head>
 <body>
-	<h1>영상물 정보 수정</h1>
-	<form action="" method="POST" onSubmit="return check(this)">
+	<h1>영상물 수정</h1>
+	<form action="movie_correct_process.jsp" method="POST" onSubmit="return check(this)">
 	<table class="t1">
 			<tr height="2" bgcolor="#FFC8C3">
 				<td colspan="2"></td>
 			</tr>
 			<tr>
-				<th>영상 제목: </th>
+				<th>제목: </th>
 				<td>
 					<input type="radio" name="title" value="Yes">변경
-					<input type="text" name="title" placeholder="제목 변경(영어)">
+					<input type="text" name="title1" placeholder="제목 입력(영어)">
 					<input type="radio" name="title" value="None" checked="checked">미변경
 				</td>
 			</tr>
@@ -105,8 +105,8 @@ p{
 				<th>종류: </th>
 				<td>
 					<input type="radio" name="type" value="Movie">Movie
-					<input type="radio" name="type" value="KnuMovieDB">KnuMovieDB
-					<input type="radio" name="type" value="TV series">TV series
+					<input type="radio" name="type" value="KnuMovieDB">KnuMovieDB Original
+					<input type="radio" name="type" value="TV series">TV Series
 					<input type="radio" name="type" value="None" checked="checked">미변경
 				</td>
 			</tr>
@@ -122,16 +122,16 @@ p{
 				<th>상영 년도: </th>
 				<td>
 					<input type="radio" name="startdate" value="Yes">변경
-					<input type="date" name="startdate">
-					<input type="radio" name="startdate" value="No" checked="checked">미변경
+					<input type="text" name="startdate1" placeholder="숫자 입력(영상길이)">
+					<input type="radio" name="startdate" value="None" checked="checked">미변경
 				</td>
 			</tr>
 			<tr>
-				<th>영상 길이: </th>
+				<th>최소영상 길이: </th>
 				<td>
-					<input type="radio" name="length" value="Yes">사용
-					<input type="text" name="length" placeholder="숫자 입력(영상길이)">
-					<input type="radio" name="length" value="None" checked="checked">변경
+					<input type="radio" name="length" value="Yes">변경
+					<input type="text" name="length1" placeholder="숫자 입력(영상길이)">
+					<input type="radio" name="length" value="None" checked="checked">미변경
 				</td>
 			</tr>
 			<tr>
@@ -150,7 +150,7 @@ p{
 			</tr>
 			<tr>
 				<td colspan="2" align="center">
-				<input type="submit" value="수정하기">
+				<input class="btn" type="submit" value="수정하기">
 				</td>
 			</tr>
 		</table>

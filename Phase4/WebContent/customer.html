@@ -58,6 +58,7 @@
   	 	      	if(xhr.readyState == 4){
 	  	 	      	if(xhr.status == 200){
   	 	          		result = xhr.responseText;
+  	 	          		result = result.trim();
   	 	          		alert(result);
   	 	          		if(result.includes("완료"))
   	 	          			document.location.href="Introduction.jsp";

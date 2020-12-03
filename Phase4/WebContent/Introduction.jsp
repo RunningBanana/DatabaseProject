@@ -57,6 +57,7 @@
  	        if(xhr.readyState == 4){
  	        	if(xhr.status == 200){
  	            	result = xhr.responseText;
+ 	            	result = result.trim();
  	            	if(result.includes("로그인")){
  	            		alert(result);
  	            		document.location.href="mainMenu.jsp";

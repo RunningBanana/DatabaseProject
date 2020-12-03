@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
 	pageEncoding="EUC-KR"%>
-<%@ page language="java" import="java.text.*, java.sql.*"%>
+<%@ page language="java" import="java.text.*, java.sql.*, java.util.*, java.util.Date"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,6 +9,7 @@
 <style type="text/css">
 
  .movie_all{
+ 	margin: auto;
 	width: 900px;
 	height: 1200px;
 	overflow: scroll;
@@ -108,13 +109,18 @@ p{
 		System.exit(1);
 	}
 	out.println("</table> </div>");
+	ArrayList<String> mm = new ArrayList<String>(500);
+	for(int i=0; i<=count; i++){
+		mm.add(Integer.toString(Movie[i]));
+	}
+	session.setAttribute("MovieID", mm);
 	%>
 	<hr>
 	<div align="left">
-	<form action="movie_correct.jsp" method="POST">
-	<p>영상물 수정하기:</p> <input type="text" placeholder="영상번호 입력"  class="text"><input type="submit" class="btn" value="선택">
-	</form>
+	<form action="detail_movie_ad.jsp" method="POST">
+	<p>영상물 수정하기:</p> <input name="num" type="text" placeholder="영상번호 입력"  class="text"><input type="submit" class="btn" value="선택">
 	<input type="button" class="btn" value="이전으로" onclick="location.href='administrator.html'">
+	</form>
 	</div>
 </body>
 </html>

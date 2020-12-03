@@ -179,6 +179,7 @@
   	 	        if(xhr.readyState == 4){
   	 	        	if(xhr.status == 200){
   	 	            	result = xhr.responseText;
+  	 	            	result = result.trim();
   	 	            	alert(result);
   	 	            	document.location.href="customer.html";
   	 				}

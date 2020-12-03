@@ -9,6 +9,7 @@
 <style type="text/css">
 
  .movie_all{
+ 	margin: auto;
 	width: 900px;
 	height: 300px;
 	overflow: scroll;
@@ -105,8 +106,8 @@ p{
 
 			
 			out.println("<tr class='movie_tr'>");
-			out.println("<tr class='movie_tr'><th class='movie_th'>항목 이름</th><th class='movie_th'>영상 제목</th><th class='movie_th'>유형</th><th class='movie_th'>성인물 제한여부</th><th class='movie_th'>상영년도</th><th class='movie_th'>평균 평점</th><th class='movie_th'>재생 시간</th><th class='movie_th'>장르</th></tr>");
-			out.println("<th class='movie_th'>영상 제목: "+"</th>"+"<td class='movie_td'>"+ Title + "</td>"+"<td class='movie_td'>"+ Type + "</td>"
+			out.println("<tr class='movie_tr'><th class='movie_th'>영상 제목</th><th class='movie_th'>유형</th><th class='movie_th'>성인물 제한여부</th><th class='movie_th'>상영년도</th><th class='movie_th'>평균 평점</th><th class='movie_th'>재생 시간</th><th class='movie_th'>장르</th></tr>");
+			out.println("<td class='movie_td'>"+ Title + "</td>"+"<td class='movie_td'>"+ Type + "</td>"
 					+"<td class='movie_td'>"+ IsAdult + "</td>"+"<td class='movie_td'>"+ StartDate + "</td>"+"<td class='movie_td'>"+ AverageScore + "</td>"
 					+"<td class='movie_td'>"+ runTimes + "</td>"+"<td class='movie_td'>"+ Genre + "</td>");
 			out.println("</tr>");
