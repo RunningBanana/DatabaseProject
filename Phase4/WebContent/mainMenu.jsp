@@ -51,6 +51,14 @@
 				<th>관리자 기능: </th>
 				<td><input type="button" class="subm" value="관리자기능" onclick="location.href='administrator.html'"></td>
 			</tr>
+			<tr>
+			<%
+				if((int)session.getAttribute("isNewUser") == 1){
+					out.println("<th>영화추천 기능: </th>");
+					out.println("<td><input type=\"button\" class=\"subm\" value=\"영화추천 기능\"></td>");
+				}
+			%>
+			</tr>
 			<tr height="2" bgcolor="#FFC8C3">
 				<td colspan="2"></td>
 			</tr>

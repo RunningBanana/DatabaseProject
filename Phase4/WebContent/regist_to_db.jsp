@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ page language="java" import="java.sql.*"%>
+<%@ page language="java" import="java.util.Calendar"%>
 
 <%
 
@@ -40,7 +41,9 @@
 			String Password = request.getParameter("password");
 			String Name = request.getParameter("name");
 			String BirthDate = request.getParameter("birth");
-			String sql = "INSERT INTO ACCOUNT(Id, Password, Name, BirthDate) VALUES(?, ?, ?, ?)";
+			Calendar cal = Calendar.getInstance();  
+			java.sql.Timestamp timestamp = new java.sql.Timestamp(cal.getTimeInMillis());
+			String sql = "INSERT INTO ACCOUNT(Id, Password, Name, BirthDate, JoinDate) VALUES(?, ?, ?, ?, ?)";
 			stmt = conn.createStatement();
 			PreparedStatement ps = conn.prepareStatement(sql);
 
@@ -49,6 +52,7 @@
 			ps.setString(2, Password);
 			ps.setString(3, Name);
 			ps.setDate(4, date);
+			ps.setTimestamp(5, timestamp);
 			res = ps.executeUpdate();
 			out.println("회원가입이 완료되었습니다.");
 			ps.close();
