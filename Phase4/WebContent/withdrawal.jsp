@@ -17,10 +17,9 @@
 	
 	try {
 		conn = DriverManager.getConnection(url, user, password);
-		conn.setAutoCommit(true);
+		conn.setAutoCommit(false);
 	} catch (SQLException ex) {
 		out.println("Cannot get a connection : " + ex.getMessage());
-		System.exit(1);
 	}
 	
 	try {
@@ -47,6 +46,7 @@
 			if (rs.next() && (rs.getInt(1) <= 1)) { //1.F 관리자 계정은 최소 1개 이상 필수
 				out.println("관리자 계정은 최소 1개 이상 존재하여야 합니다.");
 				canWithdrawal = false;
+				conn.rollback();
 			}
 		}
 		if(canWithdrawal){
@@ -64,14 +64,17 @@
 				sql = "DROP VIEW AvgScore;";
 				stmt.executeUpdate(sql);
 				out.println("회원탈퇴가 완료되었습니다.");
+				conn.commit();
 			} else {
 				out.println("회원탈퇴에 실패하셨습니다.");
+				conn.rollback();
 			}
 		}
 		ps.close();
 		stmt.close();
+		conn.close();
 	} catch (SQLException ex) {
+		conn.rollback();
 		System.err.println("sql error = " + ex.getMessage());
-		System.exit(1);
 	}
 %>

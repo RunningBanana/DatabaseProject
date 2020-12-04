@@ -73,7 +73,6 @@
 			conn.setAutoCommit(true);
 		} catch (SQLException ex) {
 			System.err.println("Cannot get a connection : " + ex.getMessage());
-			System.exit(1);
 		}
 		
 		try {
@@ -82,18 +81,15 @@
 			ps = conn.prepareStatement(sql);
 			ps.setInt(1, AccountID);
 			rs = ps.executeQuery();
-			if (rs.next()) {
+			if (rs.next())
 				isAdmin = 1;
-				ps.close();
-				stmt.close();
-			} else {
+			else 
 				isAdmin = 0;
-				ps.close();
-				stmt.close();
-			}
+			ps.close();
+			stmt.close();
+			conn.close();
 		} catch (SQLException ex) {
 			System.err.println("sql error = " + ex.getMessage());
-			System.exit(1);
 		}
 		%>
 		<script type="text/javascript">

@@ -26,10 +26,9 @@
 
 	try {
 		conn = DriverManager.getConnection(url, user, password);
-		conn.setAutoCommit(true);
+		conn.setAutoCommit(false);
 	} catch (SQLException ex) {
 		System.err.println("Cannot get a connection : " + ex.getMessage());
-		System.exit(1);
 	}
 	double score = Double.parseDouble(request.getParameter("rate"));
 	String AccountID = (String)session.getAttribute("AccountID");
@@ -37,9 +36,10 @@
 	String sql = "";
 	
 	try {
+		int res = 0;
 		stmt = conn.createStatement();
 		sql = "INSERT INTO RATING (MovieID, AccountID, Score) VALUES(" + MovieID + ", " + AccountID + ", " + score + ")";
-		stmt.executeUpdate(sql);
+		res = stmt.executeUpdate(sql);
 		System.out.println("-----------------------------평가 완료--------------------------------");
 		sql = "CREATE VIEW AvgScore AS " + "SELECT MovieID, Avg(Score) AS Avg " + "FROM RATING "
 				+ "GROUP BY MovieID";
@@ -50,11 +50,18 @@
 		sql = "DROP VIEW AvgScore;";
 		stmt.executeUpdate(sql);
 		stmt.close();
-		
-		System.out.print("평가 완료");
+		if(res == 1){
+			conn.commit();
+			System.out.print("평가 완료");
+		}
+		else{
+			conn.rollback();
+			System.out.print("평가 실패");
+		}
+		conn.close();
 	} catch (SQLException ex) {
+		conn.rollback();
 		System.err.println("sql error = " + ex.getMessage());
-		System.exit(1);
 	}
 	session.removeAttribute("MovieID");
 	%>

@@ -30,10 +30,9 @@
 		
 		try {
 			conn = DriverManager.getConnection(url, user, password);
-			conn.setAutoCommit(true);
+			conn.setAutoCommit(false);
 		} catch (SQLException ex) {
 			out.println("Cannot get a connection : " + ex.getMessage());
-			System.exit(1);
 		}
 		
 		try {
@@ -54,10 +53,19 @@
 			ps.setDate(4, date);
 			ps.setTimestamp(5, timestamp);
 			res = ps.executeUpdate();
-			out.println("회원가입이 완료되었습니다.");
+			if(res == 1){
+				out.println("회원가입이 완료되었습니다.");
+				conn.commit();
+			}
+			else{
+				out.println("회원가입에 실패하였습니다.");
+				conn.rollback();
+			}
 			ps.close();
 			stmt.close();
+			conn.close();
 		} catch (SQLException ex) {
+			conn.rollback();
 			System.err.println("sql error = " + ex.getMessage());
 		}
 	}

@@ -141,7 +141,6 @@ p{
 		conn.setAutoCommit(true);
 	} catch (SQLException ex) {
 		System.err.println("Cannot get a connection : " + ex.getMessage());
-		System.exit(1);
 	}
 
 	out.println("<div class='movie_all'>");
@@ -159,9 +158,9 @@ p{
 			out.println("</tr>");
 		}
 		stmt.close();
+		conn.close();
 	} catch (SQLException ex) {
 		System.err.println("sql error = " + ex.getMessage());
-		System.exit(1);
 	}
 	out.println("</table> </div>");
 	ArrayList<String> mm = new ArrayList<String>(500);

@@ -83,7 +83,6 @@ p{
 		conn.setAutoCommit(true);
 	} catch (SQLException ex) {
 		System.err.println("Cannot get a connection : " + ex.getMessage());
-		System.exit(1);
 	}
 	String sql = "";
 	
@@ -106,9 +105,9 @@ p{
 			count++;
 		}
 		stmt.close();
+		conn.close();
 	} catch (SQLException ex) {
 		System.err.println("sql error = " + ex.getMessage());
-		System.exit(1);
 	}
 	out.println("</table> </div>");
 	%>

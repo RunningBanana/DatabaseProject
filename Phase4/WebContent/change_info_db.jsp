@@ -17,10 +17,9 @@
 	
 	try {
 		conn = DriverManager.getConnection(url, user, password);
-		conn.setAutoCommit(true);
+		conn.setAutoCommit(false);
 	} catch (SQLException ex) {
 		out.println("Cannot get a connection : " + ex.getMessage());
-		System.exit(1);
 	}
 	
 	try {
@@ -106,12 +105,16 @@
 		}
 		if(count == res){
 			out.println("정보 변경에 성공하였습니다.");
+			conn.commit();
 		}
-		else
+		else{
 			out.println("정보 변경에 실패하였습니다.");
+			conn.rollback();	
+		}
 		stmt.close();
+		conn.close();
 	} catch (SQLException ex) {
+		conn.rollback();
 		System.err.println("sql error = " + ex.getMessage());
-		System.exit(1);
 	}
 %>

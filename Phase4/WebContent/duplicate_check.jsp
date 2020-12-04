@@ -21,7 +21,6 @@
 		conn.setAutoCommit(true);
 	} catch (SQLException ex) {
 		out.println("Cannot get a connection : " + ex.getMessage());
-		System.exit(1);
 	}
 	
 	try {
@@ -41,8 +40,8 @@
 		}
 		ps.close();
 		stmt.close();
+		conn.close();
 	} catch (SQLException ex) {
 		System.err.println("sql error = " + ex.getMessage());
-		System.exit(1);
 	}
 %>

@@ -82,7 +82,6 @@ p{
 		conn.setAutoCommit(true);
 	} catch (SQLException ex) {
 		System.err.println("Cannot get a connection : " + ex.getMessage());
-		System.exit(1);
 	}
 	
 	String sql ="SELECT M.Title, M.Type, M.IsAdult, M.StartDate, M.AverageScore, M.runTimes, G.Genre  FROM MOVIE M, GENRE G, BELONG B  WHERE M.MovieID IN ( ( SELECT M.MovieID FROM MOVIE M, GENRE G, BELONG B WHERE M.MovieID = B.MovieID AND B.GenreID = G.GenreID AND G.Genre = 'Action' AND M.AverageScore IS NOT NULL ORDER BY M.AverageScore DESC LIMIT 7 ) UNION ( SELECT M.MovieID FROM MOVIE M, GENRE G, BELONG B WHERE M.MovieID = B.MovieID AND B.GenreID = G.GenreID AND G.Genre = 'Comedy' AND M.AverageScore IS NOT NULL ORDER BY M.AverageScore DESC LIMIT 7 ) UNION ( SELECT M.MovieID FROM MOVIE M, GENRE G, BELONG B WHERE M.MovieID = B.MovieID AND B.GenreID = G.GenreID AND G.Genre = 'Romance' AND M.AverageScore IS NOT NULL ORDER BY M.AverageScore DESC LIMIT 7 ) UNION ( SELECT M.MovieID FROM MOVIE M, GENRE G, BELONG B WHERE M.MovieID = B.MovieID AND B.GenreID = G.GenreID AND G.Genre = 'SF' AND M.AverageScore IS NOT NULL ORDER BY M.AverageScore DESC LIMIT 7 ) UNION ( SELECT M.MovieID FROM MOVIE M, GENRE G, BELONG B WHERE M.MovieID = B.MovieID AND B.GenreID = G.GenreID AND G.Genre = 'Horror' AND M.AverageScore IS NOT NULL ORDER BY M.AverageScore DESC LIMIT 7 ) )  AND M.MovieID = B.MovieID AND B.GenreID = G.GenreID ORDER BY G.Genre ASC, M.AverageScore DESC";
@@ -111,9 +110,9 @@ p{
 			out.println("</tr>");
 		}
 		stmt.close();
+		conn.close();
 	} catch (SQLException ex) {
 		System.err.println("sql error = " + ex.getMessage());
-		System.exit(1);
 	}
 	out.println("</table> </div>");
 	%>

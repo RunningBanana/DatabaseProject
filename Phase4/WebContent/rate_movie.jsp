@@ -82,7 +82,6 @@ p{
 		conn.setAutoCommit(true);
 	} catch (SQLException ex) {
 		System.err.println("Cannot get a connection : " + ex.getMessage());
-		System.exit(1);
 	}
 	int rate_movieID= (Integer)session.getAttribute("MovieID");
 	
@@ -113,9 +112,9 @@ p{
 			out.println("</tr>");
 		}
 		stmt.close();
+		conn.close();
 	} catch (SQLException ex) {
 		System.err.println("sql error = " + ex.getMessage());
-		System.exit(1);
 	}
 	out.println("</table> </div>");
 	%>
